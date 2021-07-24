@@ -1,6 +1,5 @@
 package ru.redsoft.dao;
 
-import javafx.geometry.Pos;
 import ru.redsoft.datamodel.Department;
 import ru.redsoft.datamodel.Employee;
 import ru.redsoft.datamodel.Position;
@@ -9,20 +8,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.System.exit;
 
-
+@SuppressWarnings("SqlNoDataSourceInspection")
 public class EmployeeAccountingDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
     public EmployeeAccountingDAO(Connection connection) {
         this.connection = connection;
     }
 
     public List<Employee> getAllEmployees(){
-        List<Employee> employees = new ArrayList<Employee>();
-        ResultSet rs = null;
+        List<Employee> employees = new ArrayList<>();
+        ResultSet rs;
         try (Statement statement = connection.createStatement()){
 
             rs = statement.executeQuery("SELECT E.ID_EMPLOYEE, E.FIRST_NAME, E.LAST_NAME, D.DEPARTMENT_NAME, P.POSITION_NAME\n" +
@@ -42,8 +40,8 @@ public class EmployeeAccountingDAO {
     }
 
     public List<Department> getAllDepartments(){
-        List<Department> departments = new ArrayList<Department>();
-        ResultSet rs = null;
+        List<Department> departments = new ArrayList<>();
+        ResultSet rs;
         try (Statement statement = connection.createStatement()){
             rs = statement.executeQuery("SELECT D.ID_DEPARTMENT, D.DEPARTMENT_NAME, E.FIRST_NAME, E.LAST_NAME, D.PHONE, D.EMAIL\n" +
                     "FROM DEPARTMENTS D\n" +
@@ -62,8 +60,8 @@ public class EmployeeAccountingDAO {
     }
 
     public List<Position> getAllPositions() {
-        List<Position> positions = new ArrayList<Position>();
-        ResultSet rs = null;
+        List<Position> positions = new ArrayList<>();
+        ResultSet rs;
         try (Statement statement = connection.createStatement()){
             rs = statement.executeQuery("SELECT P.ID_POSITION, P.POSITION_NAME, P.SALARY\n" +
                     "FROM POSITIONS P");
